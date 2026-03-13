@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- 你的 news0.css -->
+  <link rel="stylesheet" href="./news0.css">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>news0</title>
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Montserrat:ital@0;1&amp;family=Noto+Serif+TC:wght@200..900&amp;display=swap"rel="stylesheet'><link rel="stylesheet" href="./style.css">
+
+  </head>
+    
+  <body>
+  <!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8">
+    <title>news0</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+  </head>
+  <body>
+    <!-- --- 互動解鎖層 ----->
+    <div id="interaction-layer">
+      <div class="unlock-container">
+        <div class="glow-line"></div>
+        <p class="instruction-text">劃開邊界，展開公園空間</p>
+      </div>
+    </div>
+    <!-- --- 新增：將內容包起來的容器 ----->
+    <div id="main-content">
+      <!-- 中央新聞顯示區-->
+      <div id="news-container">
+        <div id="news-text"> </div>
+      </div>
+      <!-- 點雲畫布-->
+      <canvas id="c"></canvas>
+    </div>
+    <script type="module" src="./news0.js"></script>
+  </body>
+</html>
