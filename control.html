@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <title>Control Panel</title>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <style>
+    body { background: #1a1a1a; color: white; font-family: sans-serif; text-align: center; padding-top: 30px; }
+    
+    /* 狀態顯示區 */
+    .status-monitor {
+      background: #333;
+      padding: 20px;
+      margin: 0 auto 30px auto;
+      width: fit-content;
+      border-radius: 10px;
+      border: 1px solid #555;
+    }
+    #current-page-display {
+      color: #00ffcc;
+      font-size: 24px;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    /* 按鈕樣式 */
+    .btn-group { display: flex; flex-direction: column; align-items: center; }
+    button { 
+      width: 250px; height: 50px; margin: 8px; font-size: 16px; 
+      cursor: pointer; border: none; border-radius: 8px; color: white; font-weight: bold;
+      transition: 0.2s;
+    }
+    button:active { transform: scale(0.95); }
+
+    /* 各頁面顏色 */
+    .entry { background: #F2B263; }
+    .news0 { background: #0099DD; }
+    .home { background: #F28585; }
+    .phone { background: #86A69D; }
+    .news1 { background: #F0543E; }
+    .dad { background: #666; }
+    
+    /* 重設按鈕 */
+    .reset { 
+      background: #ff4444; 
+      margin-top: 30px; 
+      border: 2px solid white;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Control System</h1>
+
+  <div class="status-monitor">
+    <p>current page：</p>
+    <div id="current-page-display">...</div>
+  </div>
+
+  <div class="btn-group">
+    <button class="entry" data-page="index">1. ENTRY</button>
+    <button class="news0" data-page="news0">2. NEWS0</button>
+    <button class="home" data-page="homepage">3. HOMEPAGE</button>
+    <button class="phone" data-page="phonecall">4. PHONECALL</button>
+    <button class="news1" data-page="news1">5. NEWS1</button>
+    <button class="dad" data-page="fromdad">6. FROMDAD</button>
+
+    <button class="reset" data-page="index">Back to Index</button>
+  </div>
+
+  <script type="module">
+    // 記得確認你的 js 資料夾路徑
+    import { db, ref, set, onValue } from './js/firebase-init.js';
+
+    $(document).ready(function() {
+      const navRef = ref(db, "system/currentPage");
+
+      // 【功能 1】即時監控：告訴我現在停在哪一頁
+      onValue(navRef, (snapshot) => {
+        const currentPage = snapshot.val();
+        if (currentPage) {
+          $('#current-page-display').text(currentPage);
+          console.log("目前資料庫狀態為:", currentPage);
+        } else {
+          $('#current-page-display').text("尚未設定");
+        }
+      });
+
+      // 【功能 2】切換指令：按了按鈕就發送跳轉指令
+      $('button').on('click', function() {
+        const pageName = $(this).data('page');
+        
+        // 發送指令到 Firebase
+        set(navRef, pageName)
+          .then(() => {
+            console.log("已切換場景至:", pageName);
+          })
+          .catch((error) => {
+            alert("同步失敗，請檢查連線：" + error);
+          });
+      });
+    });
+  </script>
+</body>
+</html>
