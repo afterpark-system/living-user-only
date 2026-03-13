@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>news1</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital@0;1&family=Noto+Serif+TC:wght@200..900&display=swap">
+    <link rel="stylesheet" href="news1.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  </head>
+
+  <body>
+    <div id="interaction-layer">
+      <div class="unlock-container">
+        <div class="glow-line">
+          <canvas id="bloodCanvas"></canvas>
+        </div>
+        <p class="instruction-text">劃開邊界，查看新聞報導</p>
+      </div>
+    </div>
+    <div id="news-container">
+      <article class="news-content">
+        <h1>忠孝復興路口死亡車禍 砂石車內輪差釀悲劇</h1>
+        <div class="date">發佈時間：2026年3月27日</div>
+        <div class="photo-wrapper">
+          <canvas id="pointCloud"></canvas>
+          <div class="scanline"></div>
+          <p class="caption">▲ 台北市一名年約42歲的張姓婦人，今（27日）騎車遭到砂石車輾過身亡。（圖／現場翻攝）</p>
+        </div>
+        <p class="a">今（2）日上午8點多，台北市大安區忠孝東路與復興南路口發生一起死亡車禍。一輛砂石車沿忠孝東路直行，準備右轉復興南路時，疑似因大型車內輪差視線死角，與一旁直行的機車發生擦撞。</p>
+        <p class="b">42歲婦人當場連人帶車捲入車底，遭砂石車後輪輾過，失去生命跡象，救護人員獲報趕抵現場，立即實施CPR搶救，但婦人傷勢過重，仍宣告不治。現場血跡斑斑，機車倒臥路中央，場面怵目驚心。</p>
+        <p class="c">據了解，死者為單親家庭出身，家中僅剩年邁父親相依為命，消息傳回家中，白髮人送黑髮人，親友悲痛不已，父親更是一度情緒潰堤，難以接受突如其來的噩耗。</p>
+        <p class="d">警方表示，經酒測後，砂石車駕駛酒測值為0，無酒駕情形，詳細肇事原因及責任歸屬，仍有待交通大隊進一步調查釐清。</p>
+      </article>
+    </div>
+    <script type="module" src="./js/phonecall.js"></script>
+    <script type="module">
+    import { db, ref, onValue } from './js/firebase-init.js';
+
+    $(document).ready(function() {
+        const navRef = ref(db, "system/currentPage");
+
+        onValue(navRef, (snapshot) => {
+            const targetPage = snapshot.val();
+            if (!targetPage) return;
+
+            // 1. 抓取目前檔名，如果是空字串就補上 index.html
+            let currentFile = window.location.pathname.split('/').pop();
+            if (currentFile === "" || currentFile === "living-user-only") {
+                currentFile = "index.html";
+            }
+            
+            // 2. 組合目標檔名
+            const targetFile = targetPage + ".html";
+
+            // 3. 只有在「目標」跟「現在」不一樣時才跳轉
+            if (currentFile !== targetFile) {
+                console.log("切換場景至:", targetFile);
+                window.location.href = targetFile;
+            }
+        });
+    });
+</script>
+
+</body>
+
+</html>

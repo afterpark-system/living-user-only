@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>fromdad</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital@0;1&family=Noto+Serif+TC:wght@200..900&display=swap">
+    <link rel="stylesheet" href="fromdad.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  </head>
+
+  <body>
+    <div class="sky">
+      <div class="cloud cloud-1">
+        <div class="mist"></div>
+        <div class="mist"></div>
+        <div class="mist"></div>
+      </div>
+      <div class="cloud cloud-2">
+        <div class="mist"></div>
+        <div class="mist"></div>
+        <div class="mist"></div>
+      </div>
+      <div class="cloud cloud-3">
+        <div class="mist"></div>
+        <div class="mist"></div>
+        <div class="mist"></div>
+      </div>
+      <div class="cloud cloud-4">
+        <div class="mist"></div>
+        <div class="mist"></div>
+        <div class="mist"></div>
+      </div>
+      <div class="cloud cloud-5">
+        <div class="mist"></div>
+        <div class="mist"></div>
+        <div class="mist"></div>
+      </div>
+      <div class="cloud cloud-6">
+        <div class="mist"></div>
+        <div class="mist"></div>
+        <div class="mist"></div>
+      </div>
+    </div>
+    <div id="interaction-layer">
+      <div class="unlock-container">
+        <div class="glow-line"></div>
+        <p class="instruction-text">劃開邊界，接收父親的思念</p>
+      </div>
+    </div>
+    <div class="page-1" id="message-container">
+      <div class="text-stream">
+        <div class="message-block">
+          <p id="s1-1">妹妹啊</p>
+          <p id="s1-2">這幾天我還是會下意識叫妳</p>
+          <p id="s1-3">然後才想起來 妳不在了</p>
+          <p id="s1-4">家裡變得很安靜</p><br>
+          <p id="s1-5">最近想起以前媽媽剛走的時候</p>
+          <p id="s1-6">妳哭得很厲害 吵著說不要阿爸</p>
+          <p id="s1-7">我看著妳 只想著一件事</p>
+          <p id="s1-8">不管怎樣 都要把妳平安養大</p><br>
+          <p id="s1-9">現在妳長大了 我動作慢了</p>
+          <p id="s1-10">很多事情都不懂</p>
+          <p id="s1-11">反而是妳照顧我比較多</p>
+        </div>
+      </div>
+    </div>
+    <div class="page-2" id="message-container-2" style="display: none; opacity: 0;">
+      <div class="text-stream">
+        <div class="message-block">
+          <p id="s2-1">大家都叫我想開一點</p>
+          <p id="s2-2">說日子還是要過</p>
+          <p id="s2-3">年紀大了 身體要緊</p><br>
+          <p id="s2-5">有時候會想</p>
+          <p id="s2-6">如果走的人是阿爸我就好了</p><br>
+          <p id="s2-7">但是妳不用擔心</p>
+          <p id="s2-8">去佛祖那邊好好修行</p>
+        </div>
+      </div>
+    </div>
+    <div class="page-3" id="message-container-3" style="display: none; opacity: 0;">
+      <div class="text-stream">
+        <div class="message-block">
+          <p id="s3-1">阿爸會把剩下的時間慢慢走完</p>
+        </div>
+      </div>
+    </div>
+    <div class="page-4" id="message-container-4" style="display: none; opacity: 0;">
+      <div class="text-stream">
+        <div class="message-block">
+          <p id="s4-1">妳聽到了嗎？</p>
+        </div>
+      </div>
+    </div>
+    <div id="soul-white-out"></div>
+  </body>
+</html>
+    <script type="module" src="./js/fromdad.js"></script>
+    <script type="module">
+    import { db, ref, onValue } from './js/firebase-init.js';
+
+    $(document).ready(function() {
+        const navRef = ref(db, "system/currentPage");
+
+        onValue(navRef, (snapshot) => {
+            const targetPage = snapshot.val();
+            if (!targetPage) return;
+
+            // 1. 抓取目前檔名，如果是空字串就補上 index.html
+            let currentFile = window.location.pathname.split('/').pop();
+            if (currentFile === "" || currentFile === "living-user-only") {
+                currentFile = "index.html";
+            }
+            
+            // 2. 組合目標檔名
+            const targetFile = targetPage + ".html";
+
+            // 3. 只有在「目標」跟「現在」不一樣時才跳轉
+            if (currentFile !== targetFile) {
+                console.log("切換場景至:", targetFile);
+                window.location.href = targetFile;
+            }
+        });
+    });
+</script>
+
+</body>
+
+</html>
