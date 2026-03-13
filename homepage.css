@@ -1,0 +1,53 @@
+@charset "UTF-8";
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #08080a;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  font-family: "Noto Serif TC", serif;
+}
+
+#news-container {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+#news-text {
+  color: #fff;
+  font-size: clamp(1.1rem, 4vw, 2.2rem);
+  letter-spacing: 0.15rem;
+  text-align: center;
+  position: relative;
+  padding: 0 2.5em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2em;
+}
+#news-text::before {
+  content: "〔";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+#news-text::after {
+  content: "〕";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
