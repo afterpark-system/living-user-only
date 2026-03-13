@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>homepage</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital@0;1&family=Noto+Serif+TC:wght@200..900&display=swap">
+    <link rel="stylesheet" href="homepage.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+  </head>
+  <body>
+    <div id="news-container">
+      <div id="news-text"> </div>
+    </div>
+    <canvas id="c"></canvas>
+    
+    <script type="module" src="./js/homepage.js"></script>
+     <script type="module">
+    import { db, ref, onValue } from './js/firebase-init.js';
+
+    $(document).ready(function() {
+        const navRef = ref(db, "system/currentPage");
+
+        onValue(navRef, (snapshot) => {
+            const targetPage = snapshot.val();
+            if (!targetPage) return;
+
+            // 1. 抓取目前檔名，如果是空字串就補上 index.html
+            let currentFile = window.location.pathname.split('/').pop();
+            if (currentFile === "" || currentFile === "living-user-only") {
+                currentFile = "index.html";
+            }
+            
+            // 2. 組合目標檔名
+            const targetFile = targetPage + ".html";
+
+            // 3. 只有在「目標」跟「現在」不一樣時才跳轉
+            if (currentFile !== targetFile) {
+                console.log("切換場景至:", targetFile);
+                window.location.href = targetFile;
+            }
+        });
+    });
+</script>
+
+  </body>
+  
+</html>
