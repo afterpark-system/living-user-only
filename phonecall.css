@@ -1,0 +1,106 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+  background-color: #08080a;
+  overflow: hidden;
+  font-family: "Noto Serif TC", serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+#interaction-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  transition: opacity 1.5s ease;
+}
+#interaction-layer.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.unlock-container {
+  width: 100%;
+  max-width: 300px;
+  text-align: center;
+  cursor: grab;
+  user-select: none;
+}
+.unlock-container .glow-line {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #fff, transparent);
+  box-shadow: 0 0 20px #fff, 0 0 40px rgba(0, 150, 255, 0.4);
+  margin-bottom: 30px;
+  position: relative;
+}
+.unlock-container .glow-line::after {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: 0;
+  width: 10px;
+  height: 10px;
+  background: #fff;
+  border-radius: 50%;
+  filter: blur(2px);
+}
+.unlock-container .instruction-text {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: clamp(0.8rem, 2.5vw, 1rem);
+  letter-spacing: 0.3em;
+  animation: breathe 3s infinite ease-in-out;
+}
+
+.floating-text {
+  position: absolute;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: clamp(1.1rem, 4.5vw, 1.6rem);
+  letter-spacing: 0.15em;
+  text-shadow: 0 0 10px rgba(0, 150, 255, 0.4);
+  white-space: normal;
+  max-width: 50%;
+  line-height: 1.4;
+  filter: blur(8px);
+  opacity: 0;
+  transition: all 2s ease;
+}
+.floating-text.is-old {
+  color: rgba(255, 255, 255, 0.25);
+  text-shadow: none;
+  filter: blur(1px);
+  opacity: 0.3;
+}
+
+.text-stream {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+  transition: opacity 8s ease-in-out, filter 8s ease-in-out;
+}
+.text-stream.final-vanish {
+  opacity: 0;
+  filter: blur(20px);
+}
+
+@keyframes breathe {
+  0%, 100% {
+    opacity: 0.5;
+    transform: scale(0.98);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+}
