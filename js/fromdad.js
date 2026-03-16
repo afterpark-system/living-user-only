@@ -78,15 +78,23 @@ setTimeout(function() {
   $('.page-4').css('opacity', '1');
   
   // 3. 觸發文字出現 (start-anim 會移除 blur 並讓 opacity 變 1)
+  const $lastText = $('.page-4 .message-block p');
   setTimeout(() => { 
-    $('.page-4').addClass('start-anim'); 
+    $lastText.addClass('start-anim'); 
   }, 100);
 
-  // 4. 只有「最後的發光」跟「全白」作為 Page 4 的延伸動作
+// 4. 【核心修正】最後的發光、背景變白、以及文字消融
   setTimeout(() => {
-    $('.page-4 .message-block p').addClass('soul-glow');
+    // 文字開始劇烈發藍白光
+    $lastText.addClass('soul-glow');
+
+    // 在發光 4 秒後，背景開始變白，同時文字開始「消融」
     setTimeout(() => {
-      $('#soul-white-out').addClass('active');
+      $('#soul-white-out').addClass('active'); // 背景開始變白
+
+      // --- 關鍵動作：讓文字消融 ---
+      $lastText.addClass('dissolve');
+      
     }, 4000); 
   }, 4000); 
 
