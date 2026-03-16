@@ -11,6 +11,8 @@ body, html {
   overflow: hidden;
   font-family: "Noto Serif TC", serif;
   -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: auto;
 }
 
 #interaction-layer {
