@@ -142,6 +142,7 @@ body, html {
   transform: translate(-50%, -50%);
   z-index: 20;
   pointer-events: auto;
+  background: transparent;
 }
 
 .unlock-container .glow-line::after {
