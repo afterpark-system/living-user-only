@@ -119,6 +119,7 @@ body, html {
   text-align: center;
   cursor: grab;
   user-select: none;
+  position: relative;
 }
 
 .unlock-container::before {
