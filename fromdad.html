@@ -130,8 +130,8 @@
       // 取得第一根手指的水平位置
       const touchX = e.touches[0].pageX;
 
-      // 如果觸碰點在螢幕左邊邊緣 20px 或右邊邊緣 20px 內
-      if (touchX < 20 || touchX > window.innerWidth - 20) {
+      // 如果觸碰點在螢幕左邊邊緣 10px 或右邊邊緣 10px 內
+      if (touchX < 10 || touchX > window.innerWidth - 10) {
         // 阻止預設行為 (即防止觸發瀏覽器的導覽手勢)
         if (e.cancelable) {
           e.preventDefault();
