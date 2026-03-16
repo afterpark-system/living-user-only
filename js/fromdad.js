@@ -4,17 +4,6 @@ $(document).ready(function() {
   let isDragging = false;
   let startX = 0;
   const threshold = 150;
-  
-  // 阻止在螢幕邊緣觸發的滑動事件
-document.addEventListener('touchstart', (e) => {
-  if (e.touches.length > 0) {
-    const touch = e.touches[0];
-    // 如果觸控點在螢幕邊緣 (例如左側 30px 或右側 30px 內)
-    if (touch.pageX < 30 || touch.pageX > window.innerWidth - 30) {
-      // 可以在這裡視情況 e.preventDefault()，但需注意 passive 選項
-    }
-  }
-}, { passive: true });
 
   // --- 1. 解鎖滑動邏輯 ---
   $('.unlock-container').on('mousedown touchstart', function(e) {
