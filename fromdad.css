@@ -6,7 +6,6 @@ body, html {
   background: #08080a;
   overflow: hidden;
   font-family: "Noto Serif TC", serif;
-  overscroll-behavior: none;
 }
 
 .sky {
