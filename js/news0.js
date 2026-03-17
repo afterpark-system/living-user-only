@@ -133,7 +133,7 @@ $(window).on('mousemove touchmove', function(e) {
       if (!window.waitStart) window.waitStart = Date.now();
       
       // 點點跳動 10 秒（配合頁面浮現時長）
-      if (Date.now() - window.waitStart > 10000) { 
+      if (Date.now() - window.waitStart > 20000) { 
         state = "END";
         
         gsap.fromTo($txt, 
