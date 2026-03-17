@@ -60,15 +60,14 @@ $(function() {
   $(window).on('resize', resizeCanvas);
   resizeCanvas();
 
-// --- 2. 互動層邏輯 (比照另一頁手感，精確觸發小光圈) ---
-// 這裡改為監聽 .glow-line，讓 CSS 的 ::before (80px 範圍) 生效
-  $('.glow-line').on('mousedown touchstart', function(e) {
+// --- 2. 互動層邏輯  ---
+$('.glow-line').on('mousedown touchstart', function(e) {
     if (isUnlocked) return;
     isDragging = true;
     startX = e.pageX || (e.originalEvent.touches ? e.originalEvent.touches[0].pageX : 0);
   });
 
-  $(window).on('mousemove touchmove', function(e) {
+$(window).on('mousemove touchmove', function(e) {
     if (!isDragging || isUnlocked) return;
     let x = e.pageX || (e.originalEvent.touches ? e.originalEvent.touches[0].pageX : 0);
     let diff = x - startX;
@@ -96,6 +95,7 @@ $(function() {
     isDragging = false;
   });
 
+  // --- 3. 解鎖後的序列 (販賣機啟動) ---
   function unlockSequence() {
     gsap.to("#interaction-layer", {
       opacity: 0, duration: 1.5,
@@ -124,7 +124,7 @@ $(function() {
     });
   }
 
-  // --- 3. 新聞序列控制 ---
+  // --- 4. 新聞序列控制 ---
   function runNewsSequence() {
     if (state === "WAIT") {
       $txt.text(dots[dotIdx]);
