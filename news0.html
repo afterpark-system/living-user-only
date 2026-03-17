@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>news0</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital@0;1&family=Noto+Serif+TC:wght@200..900&display=swap">
     <link rel="stylesheet" href="news0.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
@@ -55,6 +56,21 @@
         });
     });
 </script>
+<script>
+    // 監聽整個頁面的觸碰起點
+    window.addEventListener('touchstart', function(e) {
+      // 取得第一根手指的水平位置
+      const touchX = e.touches[0].pageX;
+
+      // 如果觸碰點在螢幕左邊邊緣 50px 或右邊邊緣 50px 內
+      if (touchX < 50 || touchX > window.innerWidth - 50) {
+        // 阻止預設行為 (即防止觸發瀏覽器的導覽手勢)
+        if (e.cancelable) {
+          e.preventDefault();
+        }
+      }
+    }, { passive: false }); // 關鍵：必須設為 false 才能成功攔截
+  </script>    
 
 </body>
 </html>
