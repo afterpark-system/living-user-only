@@ -12,20 +12,20 @@ body, html {
   font-family: "Noto Serif TC", serif;
   -webkit-font-smoothing: antialiased;
   overscroll-behavior: none;
-  -webkit-overflow-scrolling: auto;
 }
 
 #interaction-layer {
   position: absolute;
   inset: 0;
-  z-index: 20;
+  z-index: 100;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  background: #08080a;
   transition: opacity 1.5s ease;
 }
+
 #interaction-layer.fade-out {
   opacity: 0;
   pointer-events: none;
@@ -37,29 +37,47 @@ body, html {
   text-align: center;
   cursor: grab;
   user-select: none;
-}
-.unlock-container .glow-line {
-  width: 100%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, #fff, transparent);
-  box-shadow: 0 0 20px #fff, 0 0 40px rgba(0, 150, 255, 0.4);
-  margin-bottom: 30px;
   position: relative;
 }
+
+.unlock-container .glow-line {
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(8, 8, 10, 0) 0%, rgba(255, 255, 255, 0.8) 50%, rgba(8, 8, 10, 0) 100%);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 30px rgba(0, 150, 255, 0.4);
+  margin-bottom: 40px;
+  position: relative;
+  transition: transform 0.1s linear;
+}
+
+.unlock-container .glow-line::before {
+  content: '';
+  position: absolute;
+  width: 80px;  
+  height: 80px; 
+  top: 50%;
+  left: 0;
+  transform: translate(-50%, -50%);
+  z-index: 20;
+  background: transparent; 
+  pointer-events: auto;
+}
+
 .unlock-container .glow-line::after {
   content: "";
   position: absolute;
-  top: -5px;
+  top: -6.5px;
   left: 0;
-  width: 10px;
-  height: 10px;
+  width: 15px;
+  height: 15px;
   background: #fff;
   border-radius: 50%;
-  filter: blur(2px);
+  filter: blur(1.6px);
 }
+
 .unlock-container .instruction-text {
-  color: rgba(255, 255, 255, 0.5);
-  font-size: clamp(0.8rem, 2.5vw, 1rem);
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1rem;
   letter-spacing: 0.3em;
   animation: breathe 3s infinite ease-in-out;
 }
