@@ -14,6 +14,7 @@ $(function() {
   let state = "WAIT";             
   let dotIdx = 0;
   let isUnlocked = false; 
+  
   let isDragging = false; // 新增變數定義
   let startX = 0;         // 新增變數定義
   const threshold = 150;
@@ -60,7 +61,8 @@ $(function() {
   resizeCanvas();
 
 // --- 2. 互動層邏輯 (比照另一頁手感，精確觸發小光圈) ---
-  $('.glow-line').on('mousedown touchstart', function(e) { // 改為監聽 glow-line
+// 這裡改為監聽 .glow-line，讓 CSS 的 ::before (80px 範圍) 生效
+  $('.glow-line').on('mousedown touchstart', function(e) {
     if (isUnlocked) return;
     isDragging = true;
     startX = e.pageX || (e.originalEvent.touches ? e.originalEvent.touches[0].pageX : 0);
@@ -71,7 +73,9 @@ $(function() {
     let x = e.pageX || (e.originalEvent.touches ? e.originalEvent.touches[0].pageX : 0);
     let diff = x - startX;
     
+    // 只允許向右滑動
     if (diff > 0 && diff < threshold) {
+      // 這裡直接改 transform，不要依賴 CSS 的 transition 才會順
       $('.glow-line').css('transform', `translateX(${diff}px)`);
       $('.unlock-container').css('opacity', 1 - (diff / threshold));
     }
@@ -85,7 +89,7 @@ $(function() {
 
   $(window).on('mouseup touchend', () => {
     if (isDragging && !isUnlocked) {
-      // 比照另一頁：直接重置 CSS，手感更直接俐落
+      // 放開時直接歸零，這是你最喜歡的那一頁手感
       $('.glow-line').css('transform', 'translateX(0)');
       $('.unlock-container').css('opacity', 1);
     }
