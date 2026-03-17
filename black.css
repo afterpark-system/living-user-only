@@ -1,0 +1,101 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+  background: #08080a;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+.sky {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  filter: blur(60px);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 4s ease;
+}
+.sky.show-mist {
+  opacity: 1;
+}
+
+.cloud {
+  position: absolute;
+  display: flex;
+}
+.cloud .mist {
+  background: rgba(255, 255, 255, 0.08);
+  width: 500px;
+  height: 180px;
+  border-radius: 50%;
+  box-shadow: 150px 50px 100px rgba(100, 150, 255, 0.04), -150px 30px 100px rgba(100, 150, 255, 0.04);
+  margin-left: -120px;
+}
+
+.cloud-1 {
+  top: 50vh;
+  left: -30vw;
+  transform: scale(0.8);
+  animation: drift 118s linear infinite;
+  animation-delay: -55s;
+}
+
+.cloud-2 {
+  top: 85vh;
+  left: -30vw;
+  transform: scale(0.7);
+  animation: drift 104s linear infinite;
+  animation-delay: -38s;
+}
+
+.cloud-3 {
+  top: 55vh;
+  left: -30vw;
+  transform: scale(2.1);
+  animation: drift 108s linear infinite;
+  animation-delay: -17s;
+}
+
+.cloud-4 {
+  top: 23vh;
+  left: -30vw;
+  transform: scale(1.7);
+  animation: drift 94s linear infinite;
+  animation-delay: -76s;
+}
+
+.cloud-5 {
+  top: 44vh;
+  left: -30vw;
+  transform: scale(1);
+  animation: drift 78s linear infinite;
+  animation-delay: -82s;
+}
+
+.cloud-6 {
+  top: 79vh;
+  left: -30vw;
+  transform: scale(1.6);
+  animation: drift 86s linear infinite;
+  animation-delay: -62s;
+}
+
+@keyframes drift {
+  0% {
+    transform: translateX(-20vw);
+    opacity: 0;
+  }
+  15%, 85% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(130vw);
+    opacity: 0;
+  }
+}
