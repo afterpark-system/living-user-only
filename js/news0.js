@@ -14,6 +14,9 @@ $(function() {
   let state = "WAIT";             
   let dotIdx = 0;
   let isUnlocked = false; 
+  let isDragging = false; // 新增變數定義
+  let startX = 0;         // 新增變數定義
+  const threshold = 150;
   
   const $txt = $('#news-text');
   const dots = ["・　　", "・・　", "・・・"];
@@ -56,8 +59,9 @@ $(function() {
   $(window).on('resize', resizeCanvas);
   resizeCanvas();
 
-  // --- 2. 互動層邏輯 (即時推開感) ---
-  $('.unlock-container').on('mousedown touchstart', function(e) {
+// --- 2. 互動層邏輯 (比照另一頁手感，精確觸發小光圈) ---
+  $('.glow-line').on('mousedown touchstart', function(e) { // 改為監聽 glow-line
+    if (isUnlocked) return;
     isDragging = true;
     startX = e.pageX || (e.originalEvent.touches ? e.originalEvent.touches[0].pageX : 0);
   });
@@ -81,36 +85,35 @@ $(function() {
 
   $(window).on('mouseup touchend', () => {
     if (isDragging && !isUnlocked) {
-      gsap.to('.glow-line', { x: 0, duration: 0.3 });
-      gsap.to('.unlock-container', { opacity: 1, duration: 0.3 });
+      // 比照另一頁：直接重置 CSS，手感更直接俐落
+      $('.glow-line').css('transform', 'translateX(0)');
+      $('.unlock-container').css('opacity', 1);
     }
     isDragging = false;
   });
 
   function unlockSequence() {
-    // 移除解鎖層
     gsap.to("#interaction-layer", {
       opacity: 0, duration: 1.5,
       onComplete: () => { $("#interaction-layer").hide(); }
     });
 
-    // 強制重置主內容狀態
     $("#main-content").css({ 
       display: 'block', 
       opacity: 0,
       visibility: 'visible'
     });
     
-    // 強制重繪，確保 10 秒動畫從 0 開始
     $("#main-content")[0].offsetHeight; 
 
-    // 啟動 10 秒慢速淡入
     gsap.to("#main-content", { 
       opacity: 1, 
       duration: 10, 
-      ease: "linear", // 改為線性，讓亮起速度均勻，不會開頭太快
+      ease: "linear",
       onStart: () => {
-        // 重計點點開始時間
+        // 關鍵：立刻填入第一個狀態，消除「多一組括號」閃爍
+        $txt.text(dots[0]); 
+        dotIdx = 1;
         window.waitStart = Date.now();
         runNewsSequence(); 
       } 
