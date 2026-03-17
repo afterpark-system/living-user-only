@@ -49,6 +49,21 @@
         });
     });
 </script>
+<script>
+    // 監聽整個頁面的觸碰起點
+    window.addEventListener('touchstart', function(e) {
+      // 取得第一根手指的水平位置
+      const touchX = e.touches[0].pageX;
+
+      // 如果觸碰點在螢幕左邊邊緣 50px 或右邊邊緣 50px 內
+      if (touchX < 50 || touchX > window.innerWidth - 50) {
+        // 阻止預設行為 (即防止觸發瀏覽器的導覽手勢)
+        if (e.cancelable) {
+          e.preventDefault();
+        }
+      }
+    }, { passive: false }); // 關鍵：必須設為 false 才能成功攔截
+  </script>       
 
 </body>
 
