@@ -57,12 +57,7 @@ $(function() {
   resizeCanvas();
 
   // --- 2. 互動層邏輯 (即時推開感) ---
-  let isDragging = false;
-  let startX = 0;
-  const threshold = 150; 
-
-  $('#interaction-layer').on('mousedown touchstart', function(e) {
-    if (isUnlocked) return;
+  $('.unlock-container').on('mousedown touchstart', function(e) {
     isDragging = true;
     startX = e.pageX || (e.originalEvent.touches ? e.originalEvent.touches[0].pageX : 0);
   });
